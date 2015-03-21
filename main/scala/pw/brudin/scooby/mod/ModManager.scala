@@ -1,6 +1,5 @@
 package pw.brudin.scooby.mod
 
-import pw.brudin.scooby.Scooby
 import pw.brudin.scooby.mod.mods.{TriggerBot, Sprint}
 
 /**
@@ -12,8 +11,8 @@ final class ModManager {
   private val mods = MutableList.empty[Mod]
 
   def load(): Unit = {
-    register(new Sprint(scooby))
-    register(new TriggerBot(scooby))
+    register(new Sprint)
+    register(new TriggerBot)
   }
 
   def register(mod: Mod): Unit = {
