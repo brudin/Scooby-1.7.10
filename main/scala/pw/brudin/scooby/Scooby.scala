@@ -11,12 +11,12 @@ object Scooby {
   import Mod.EventHandler
 
   val id = "OpenComputers"
-  val modManager = new ModManager(this)
+  val modManager = new ModManager
   val eventManager = new EventManager(this)
 
   @EventHandler
   def init(event: FMLInitializationEvent): Unit = {
-    FMLCommonHandler.instance().bus().register(eventManager)
+    FMLCommonHandler.instance.bus.register(eventManager)
     MinecraftForge.EVENT_BUS.register(eventManager)
     modManager.load()
   }
