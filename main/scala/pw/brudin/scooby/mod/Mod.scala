@@ -6,7 +6,11 @@ import net.minecraft.client.entity.EntityClientPlayerMP
 /**
  * @since 2:15 PM on 3/19/2015
  */
-trait Mod(keyCode: Int) {
+object Mod {
+  def unapply(mod: Mod): Option[Int] = Some(mod.keyCode)
+}
+
+trait Mod(private[Mod] val keyKode: Int) {
 
   def setEnabled(enabled: Boolean): Unit
 

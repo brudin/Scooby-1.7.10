@@ -12,7 +12,7 @@ object Scooby {
 
   val id = "OpenComputers"
   val modManager = new ModManager
-  val eventManager = new EventManager(this)
+  val eventManager = new EventManager
 
   @EventHandler
   def init(event: FMLInitializationEvent): Unit = {

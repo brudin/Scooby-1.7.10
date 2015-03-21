@@ -6,9 +6,11 @@ import pw.brudin.scooby.mod.mods.{TriggerBot, Sprint}
  * @since 2:42 PM on 3/19/2015
  */
 final class ModManager {
-  import scala.collection.mutable.{List => MutableList}
+  import scala.collection.mutable.{Set => MutableSet}
 
-  private val mods = MutableList.empty[Mod]
+  private val modList = MutableSet.empty[Mod]
+
+  def mods: Iterable[Mod] = modList
 
   def load(): Unit = {
     register(new Sprint)
@@ -16,7 +18,7 @@ final class ModManager {
   }
 
   def register(mod: Mod): Unit = {
-    mods += mod
+    modList += mod
   }
 
 }
