@@ -8,14 +8,15 @@ import pw.brudin.scooby.mod.ModManager
 
 @Mod(modid = Scooby.id, modLanguage = "scala")
 object Scooby {
+  import Mod.EventHandler
 
-  final val id = "OpenComputers"
-  final val modManager = new ModManager(this)
-  final val eventManager = new EventManager(this)
+  val id = "OpenComputers"
+  val modManager = new ModManager
+  val eventManager = new EventManager
 
-  @Mod.EventHandler
+  @EventHandler
   def init(event: FMLInitializationEvent): Unit = {
-    FMLCommonHandler.instance().bus().register(eventManager)
+    FMLCommonHandler.instance.bus.register(eventManager)
     MinecraftForge.EVENT_BUS.register(eventManager)
     modManager.load()
   }
