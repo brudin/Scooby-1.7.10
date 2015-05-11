@@ -2,7 +2,7 @@ package pw.brudin.scooby.mod.mods
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityClientPlayerMP
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.{Entity, EntityLivingBase}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import org.lwjgl.input.Keyboard
@@ -13,11 +13,16 @@ import scala.util.Random
 /**
  * @since 2:48 PM on 3/19/2015
  */
+
+object TriggerBot {
+  var onlyPlayers = true
+}
+
 final class TriggerBot extends Mod(Keyboard.KEY_R) {
 
   /* Instance of Random used to get the amount of time to wait between hits */
-  private val random  = new Random
-  private val timer   = new Timer
+  private val random      = new Random
+  private val timer       = new Timer
 
   /**
    * Called with the LivingEvent.LivingUpdateEvent event.
@@ -29,15 +34,20 @@ final class TriggerBot extends Mod(Keyboard.KEY_R) {
     if (timer.hasReached(delay)) {
       if (mc.objectMouseOver != null) {
         if (mc.objectMouseOver.typeOfHit == MovingObjectType.ENTITY) {
-          mc.objectMouseOver.entityHit match {
-            case entity: EntityPlayer if mc.objectMouseOver.entityHit.isEntityAlive =>
-              attack(entity)
-            case _ =>
+          if (shouldHit(mc.objectMouseOver.entityHit, mc)) {
+            attack(mc.objectMouseOver.entityHit.asInstanceOf[EntityLivingBase])
           }
         }
       }
       timer.reset()
     }
+  }
+
+  def shouldHit(entity: Entity, mc: Minecraft): Boolean = {
+    if (!entity.isEntityAlive || !entity.isInstanceOf[EntityLivingBase]) return false
+    if (!entity.isInstanceOf[EntityPlayer] && TriggerBot.onlyPlayers) return false
+    if (entity.isInstanceOf[EntityLivingBase] && !TriggerBot.onlyPlayers) return true
+    false
   }
 
 

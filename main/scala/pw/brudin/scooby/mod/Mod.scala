@@ -3,16 +3,13 @@ package pw.brudin.scooby.mod
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityClientPlayerMP
 
-/**
- * @since 2:15 PM on 3/19/2015
- */
-object Mod {
-  def unapply(mod: Mod): Option[Int] = Some(mod.keyCode)
-}
+abstract class Mod(val keyCode: Int) {
 
-trait Mod(private[Mod] val keyKode: Int) {
+  var enabled = false
 
-  def setEnabled(enabled: Boolean): Unit
+  def setEnabled(enabled: Boolean): Unit = {
+    this.enabled = enabled
+  }
 
   /**
    * Called with the LivingEvent.LivingUpdateEvent event.
@@ -20,5 +17,4 @@ trait Mod(private[Mod] val keyKode: Int) {
    * @see     net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent#LivingUpdateEvent
    */
   def onLivingUpdate(mc: Minecraft, player: EntityClientPlayerMP): Unit
-
 }

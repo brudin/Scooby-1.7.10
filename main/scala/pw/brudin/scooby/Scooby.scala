@@ -10,9 +10,9 @@ import pw.brudin.scooby.mod.ModManager
 object Scooby {
   import Mod.EventHandler
 
-  val id = "OpenComputers"
+  final val id = "OpenComputers"
   val modManager = new ModManager
-  val eventManager = new EventManager
+  val eventManager = new EventManager(this)
 
   @EventHandler
   def init(event: FMLInitializationEvent): Unit = {
